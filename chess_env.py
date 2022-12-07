@@ -124,7 +124,38 @@ class GameState:
                         validSquares = [(checkRow, checkCol)]
                     else:
                         for i in range(1, 8):
-                            validSquare = (kingRow)
+                            validSquare = (kingRow + check[2] * i, kingCol + check[3] * i)
+                            validSquares.append(validSquare)
+                            if validSquare[0] == checkRow and validSquare[1] == checkCol:
+                                break
+
+                    for i in range(len(moves) -1, -1, -1):
+                        if moves[i].pieceMoved[1] != "K":
+                            if not (moves[i].endRow, moves[i].endCol) in validSquares:
+                                moves.remove(moves[i])
+                else:
+                    self.kingMoves(kingRow, kingCol, moves)
+
+            else:
+                moves = self.getPossibleMoves()
+                if self.isWhiteMove:
+                    self.getCastlingMoves(self.whiteKingLocation[0], self.whiteKingLocation[1], moves)
+                else:
+                    self.getCastlingMoves(self.blackKingLocation[0], self.blackKingLocation[1], moves)
+
+            if len(moves) == 0:
+                if self.inCheckPosition():
+                    self.isCheckmate = True
+                else:
+                    self.isStalemate = True
+            else:
+                self.isCheckmate = False
+                self.isStalemate = False
+
+            self.castlingRights = tempCastlingRights
+            return moves
+
+
 
 
 
