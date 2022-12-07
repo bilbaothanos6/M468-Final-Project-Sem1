@@ -155,6 +155,55 @@ class GameState:
             self.castlingRights = tempCastlingRights
             return moves
 
+        def undoLastMove(self):
+            if len(self.moveLog) != 0:
+                move = self.moveLog.pop()
+                self.board[move.startRow][move.startCol] = move.pieceMoved
+                self.board[move.endRow][move.endCol] = move.pieceCaptured
+                self.isWhiteMove = not self.isWhiteMove
+                if move.pieceMoved == "wK":
+                    self.whiteKingLocation = (move.startRow, move.startCol)
+                elif move.pieceMoved == "bK":
+                    self.blackKingLocation = (move.startRow, move.startCol)
+                if move.isEnpassantMove:
+                    self.board[move.endRow][move.endCol] = "--"
+                    self.board[move.startRow][move.endCol] = move.pieceCaptured
+
+                self.enpassantCaptureCoordinatesLog.pop()
+                self.enpassantCaptureCoordinates = self.enpassantCaptureCoordinatesLog[-1]
+
+                self.castlingRightsLog.pop()
+                self.castlingRights = self.castlingRightsLog[-1]
+                if move.isCastleMove:
+                    if move.endCol - move.startCol == 2:
+                        self.board[move.endRow][move.endCol + 1] = self.board[move.endRow][move.endCol - 1]
+                        self.board[move.endRow][move.endCol - 1] = "--"
+                    else:
+                        self.board[move.endRow][move.endCol - 2] = self.board[move.endRow][move.endCol + 1]
+                        self.board[move.endRow][move.endCol + 1] = "--"
+                self.isCheckmate = False
+                self.isStalemate = False
+
+        def inCheckPosition(self):
+            if self.isWhiteMove:
+                return self.squareUnderAttack(self.whiteKingLocation[0], self.whiteKingLocation[1])
+            else:
+                return self.squareUnderAttack(self.blackKingLocation[0], self.blackKingLocation[1])
+
+        def getPossibleMoves(self):
+            moves = []
+            for i in range(len(self.board)):
+                for j in range(len(self.board[i])):
+                    turn = self.board[i][j][0]
+                    if (turn == "w" and self.isWhiteMove) or (turn == "b" and not self.isWhiteMove):
+                        piece = self.board[i][j][1]
+                        self.pieceMoveFunctions[piece](i, j, moves)
+            return moves
+
+
+
+
+
 
 
 
