@@ -218,11 +218,11 @@ def main():
             if gameState.isWhiteMove:
                 generateEndGameText(screen, "Black wins by checkmate!")
             else:
-                generateEndGameText(screen, "White wins by checkmate")
+                generateEndGameText(screen, "White wins by checkmate!")
 
         elif gameState.isStalemate:
             gameOver = True
-            generateEndGameText(screen, "Stalemate")
+            generateEndGameText(screen, "Well fought. It's a stalemate.")
 
         clock.tick(MAX_FPS)
         p.display.flip()
