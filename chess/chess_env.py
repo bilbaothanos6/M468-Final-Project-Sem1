@@ -65,7 +65,8 @@ class GameState:
         self.enpassantCaptureCoordinatesLog.append(self.enpassantCaptureCoordinates)
 
         self.updateCastlingRights(move)
-        self.castlingRightsLog.append(CastlingRights(self.castlingRights.wks, self.castlingRights.bks, self.castlingRights.wqs,
+        self.castlingRightsLog.append(CastlingRights(self.castlingRights.wks, self.castlingRights.bks,
+                                                     self.castlingRights.wqs,
                                                      self.castlingRights.bqs))
 
     def updateCastlingRights(self, move):
@@ -220,8 +221,8 @@ class GameState:
             direction = directions[i]
             possiblePin = ()
             for j in range(1, 8):
-                endRow = startRow + direction[0] * i
-                endCol = startCol + direction[1] * i
+                endRow = startRow + direction[0] * j
+                endCol = startCol + direction[1] * j
                 if 0<= endRow <= 7 and 0 <= endCol <= 7:
                     endPiece = self.board[endRow][endCol]
                     if endPiece[0] == allyColor and endPiece[1] != "K":
