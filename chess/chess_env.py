@@ -100,6 +100,7 @@ class GameState:
                     self.castlingRights.wks = False
 
     def validMoves(self):
+        #check logic of this function!
         tempCastlingRights = CastlingRights(self.castlingRights.wks, self.castlingRights.bks,
                                             self.castlingRights.wqs, self.castlingRights.bqs)
 
