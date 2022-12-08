@@ -47,19 +47,28 @@ pawnScores = [[0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8],
                [0.25, 0.3, 0.3, 0.0, 0.0, 0.3, 0.3, 0.25],
                [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]]
 
-positionPiecesScores = {"wN": knightScores, "bN": knightScores[::-1], "wB": bishopScores, "bB": bishopScores[::-1], "wQ": queenScores, "bQ": queenScores[::-1], "wR": rookScores, "bR": rookScores[::-1], "wp": pawnScores, "bp": pawnScores[::-1]}
+positionPiecesScores = {"wN": knightScores,
+                         "bN": knightScores[::-1],
+                         "wB": bishopScores,
+                         "bB": bishopScores[::-1],
+                         "wQ": queenScores,
+                         "bQ": queenScores[::-1],
+                         "wR": rookScores,
+                         "bR": rookScores[::-1],
+                         "wp": pawnScores,
+                         "bp": pawnScores[::-1]}
 
 STALEMATE = 0
 CHECKMATE = 1000
 DEPTH = 3
 
 def scoreTheBoard(gameState):
-    if gameState.checkmate:
+    if gameState.isCheckmate:
         if gameState.isWhiteMove:
             return -CHECKMATE
         else:
             return CHECKMATE
-    elif gameState.stalemate:
+    elif gameState.isStalemate:
         return STALEMATE
     score = 0
     for i in range(len(gameState.board)):
@@ -102,5 +111,5 @@ def findTheBestMove(gameState, validMoves, returnSequence):
     global nextMove
     nextMove = None
     random.shuffle(validMoves)
-    negaMaxAlphaBeta(gameState, validMoves, DEPTH, -CHECKMATE, CHECKMATE, 1 if gameState.isWhiteMove else - 1)
+    negaMaxAlphaBeta(gameState, validMoves, DEPTH, -CHECKMATE, CHECKMATE, 1 if gameState.isWhiteMove else -1)
     returnSequence.put(nextMove)

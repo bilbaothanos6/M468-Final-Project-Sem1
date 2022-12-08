@@ -129,7 +129,7 @@ class GameState:
                         if validSquare[0] == checkRow and validSquare[1] == checkCol:
                             break
 
-                for i in range(len(moves) -1, -1, -1):
+                for i in range(len(moves) - 1, -1, -1):
                     if moves[i].pieceMoved[1] != "K":
                         if not (moves[i].endRow, moves[i].endCol) in validSquares:
                             moves.remove(moves[i])
@@ -257,7 +257,7 @@ class GameState:
     def pawnMoves(self, row, col, moves):
         isPinnedPiece = False
         pinDirection = ()
-        for i in range(len(self.pins) -1, -1, -1):
+        for i in range(len(self.pins) - 1, -1, -1):
             if self.pins[i][0] == row and self.pins[i][1] == col:
                 isPinnedPiece = True
                 pinDirection = (self.pins[i][2], self.pins[i][3])
@@ -336,7 +336,7 @@ class GameState:
     def rookMoves(self, row, col, moves):
         isPiecePinned = False
         pinDirection = ()
-        for i in range(len(self.pins) -1, -1, -1):
+        for i in range(len(self.pins) - 1, -1, -1):
             if self.pins[i][0] == row and self.pins[i][1] == col:
                 isPiecePinned = True
                 pinDirection = (self.pins[i][2], self.pins[i][3])
@@ -348,8 +348,8 @@ class GameState:
         enemyColor = "b" if self.isWhiteMove else "w"
         for move in rookMoves:
             for i in range(1, 8):
-                endRow = row + rookMoves[0] * i
-                endCol = col + rookMoves[1] * i
+                endRow = row + move[0] * i
+                endCol = col + move[1] * i
                 if 0 <= endRow <= 7 and 0 <= endCol <= 7:
                     if not isPiecePinned or pinDirection == rookMoves or pinDirection == (-move[0], -move[1]):
                         endPiece = self.board[endRow][endCol]
