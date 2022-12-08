@@ -87,7 +87,7 @@ def scoreTheBoard(gameState):
 def findRandomMove(validMoves):
     return random.choice(validMoves)
 
-def negaMaxAlphaBeta(gameState, validMoves, depth, alpha, beta, turnMultiplier):
+def miniMaxAlphaBeta(gameState, validMoves, depth, alpha, beta, turnMultiplier):
     global nextMove
     if depth == 0:
         return turnMultiplier * scoreTheBoard(gameState)
@@ -95,7 +95,7 @@ def negaMaxAlphaBeta(gameState, validMoves, depth, alpha, beta, turnMultiplier):
     for move in validMoves:
         gameState.executeMove(move)
         nextMoves = gameState.validMoves()
-        score = -negaMaxAlphaBeta(gameState, nextMoves, depth - 1, -beta, -alpha, -turnMultiplier)
+        score = -miniMaxAlphaBeta(gameState, nextMoves, depth - 1, -beta, -alpha, -turnMultiplier)
         if score > maxScore:
             maxScore = score
             if depth == DEPTH:
@@ -111,5 +111,5 @@ def findTheBestMove(gameState, validMoves, returnSequence):
     global nextMove
     nextMove = None
     random.shuffle(validMoves)
-    negaMaxAlphaBeta(gameState, validMoves, DEPTH, -CHECKMATE, CHECKMATE, 1 if gameState.isWhiteMove else -1)
+    miniMaxAlphaBeta(gameState, validMoves, DEPTH, -CHECKMATE, CHECKMATE, 1 if gameState.isWhiteMove else -1)
     returnSequence.put(nextMove)
