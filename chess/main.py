@@ -36,7 +36,7 @@ def highlightMoves(screen, gameState, validMoves, squareSelected):
         lastMove = gameState.moveLog[-1]
         selected = p.Surface((SQUARE_SIZE, SQUARE_SIZE))
         selected.set_alpha(100)
-        selected.fill(p.Color("green"))
+        selected.fill(p.Color("red"))
         screen.blit(selected, (lastMove.endCol * SQUARE_SIZE, lastMove.endRow * SQUARE_SIZE))
     if squareSelected != ():
         i, j = squareSelected
@@ -45,7 +45,7 @@ def highlightMoves(screen, gameState, validMoves, squareSelected):
             selected.set_alpha(100)
             selected.fill(p.Color("blue"))
             screen.blit(selected, (j * SQUARE_SIZE, i * SQUARE_SIZE))
-            selected.fill(p.Color("yellow"))
+            selected.fill(p.Color("green"))
             for move in validMoves:
                 if move.startRow == i and move.startCol == j:
                     screen.blit(selected, (move.endCol * SQUARE_SIZE, move.endRow * SQUARE_SIZE))
