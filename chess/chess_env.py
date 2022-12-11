@@ -223,7 +223,7 @@ class GameState:
             for j in range(1, 8):
                 endRow = startRow + direction[0] * j
                 endCol = startCol + direction[1] * j
-                if 0<= endRow <= 7 and 0 <= endCol <= 7:
+                if 0 <= endRow <= 7 and 0 <= endCol <= 7:
                     endPiece = self.board[endRow][endCol]
                     if endPiece[0] == allyColor and endPiece[1] != "K":
                         if possiblePin == ():
